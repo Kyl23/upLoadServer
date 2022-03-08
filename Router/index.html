@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function verify() {
+            let form = document.getElementById('form')
+            let token = document.getElementById('token')
+            let p = prompt('what is your token now');
+            fetch('/verify', { method: "POST", body: JSON.stringify({ "token": p }), headers: { "Content-type": 'application/json' } }).then((hideToken) => {
+                return hideToken.text()
+            }).then((result) => {
+                if (result === "err") {
+                    alert('errr token try again')
+                    return
+                }
+                token.value = result
+                form.submit()
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <form id="form" method="POST" action="/" enctype="multipart/form-data">
+        <input name="token" value="" id="token" style="display: none;" />
+        <input type="file" name="file" multiple />
+        <input type="button" value="submit" onclick="verify()" />
+    </form>
+</body>
+
+</html>
